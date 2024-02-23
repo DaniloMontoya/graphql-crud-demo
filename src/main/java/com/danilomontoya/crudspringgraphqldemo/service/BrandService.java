@@ -1,5 +1,6 @@
 package com.danilomontoya.crudspringgraphqldemo.service;
 
+import com.danilomontoya.crudspringgraphqldemo.dto.BrandDTO;
 import com.danilomontoya.crudspringgraphqldemo.entity.Brand;
 import com.danilomontoya.crudspringgraphqldemo.enums.Country;
 import com.danilomontoya.crudspringgraphqldemo.repository.BrandRepository;
@@ -31,21 +32,21 @@ public class BrandService {
                 .orElseThrow(() -> new IllegalArgumentException("Not exist Id"));
     }
 
-    public Brand saveBrand(String name, Country country) {
+    public Brand saveBrand(BrandDTO dto) {
         var brand = Brand.builder()
-                .name(name)
-                .country(country)
+                .name(dto.getName())
+                .country(dto.getCountry())
                 .build();
         return brandRepository.save(brand);
     }
 
-    public Brand updtaBrand(int id, String name, Country country) {
+    public Brand updtaBrand(int id, BrandDTO dto) {
 
         var brand = brandRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Not exist Id"));
 
-        brand.setName(name);
-        brand.setCountry(country);
+        brand.setName(dto.getName());
+        brand.setCountry(dto.getCountry());
         return brandRepository.save(brand);
     }
 
@@ -59,8 +60,8 @@ public class BrandService {
 
     @PostConstruct
     private void loadData() {
-        saveBrand("Mercedes", Country.GER);
-        saveBrand("BMW", Country.GER);
-        saveBrand("JAGUAR", Country.ENG);
+        saveBrand(new BrandDTO("Mercedes", Country.GER));
+        saveBrand(new BrandDTO("BMW", Country.GER));
+        saveBrand(new BrandDTO("JAGUAR", Country.ENG));
     }
 }

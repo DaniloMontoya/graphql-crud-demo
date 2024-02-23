@@ -1,5 +1,6 @@
 package com.danilomontoya.crudspringgraphqldemo.service;
 
+import com.danilomontoya.crudspringgraphqldemo.dto.ModelDTO;
 import com.danilomontoya.crudspringgraphqldemo.entity.Model;
 import com.danilomontoya.crudspringgraphqldemo.repository.BrandRepository;
 import com.danilomontoya.crudspringgraphqldemo.repository.ModelRepository;
@@ -30,12 +31,12 @@ public class ModelService {
                 .orElseThrow(() -> new IllegalArgumentException("Not exist Id"));
     }
 
-    public Model saveModel(int brandId, String name) {
-        var brand = brandRepository.findById(brandId)
+    public Model saveModel(ModelDTO dto) {
+        var brand = brandRepository.findById(dto.getBrandId())
                 .orElseThrow(() -> new IllegalArgumentException("Not exist Id"));
 
         var model = Model.builder()
-                .name(name)
+                .name(dto.getName())
                 .brand(brand)
                 .build();
         return modelRepository.save(model);
@@ -59,8 +60,8 @@ public class ModelService {
     @Lazy
     @PostConstruct
     private void loadData() {
-        saveModel(1, "Clase s");
-        saveModel(2, "Serie 5");
-        saveModel(3, "F pace");
+        saveModel(new ModelDTO(1, "Clase s"));
+        saveModel(new ModelDTO(2, "Serie 5"));
+        saveModel(new ModelDTO(3, "F pace"));
     }
 }

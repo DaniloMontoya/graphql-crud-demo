@@ -1,5 +1,7 @@
 package com.danilomontoya.crudspringgraphqldemo.controller;
 
+import com.danilomontoya.crudspringgraphqldemo.dto.BrandDTO;
+import com.danilomontoya.crudspringgraphqldemo.dto.ModelDTO;
 import com.danilomontoya.crudspringgraphqldemo.entity.Brand;
 import com.danilomontoya.crudspringgraphqldemo.entity.Model;
 import com.danilomontoya.crudspringgraphqldemo.enums.Country;
@@ -36,13 +38,13 @@ public class BrandController {
     }
 
     @MutationMapping
-    public Brand saveBrand(@Argument String name, @Argument Country country) {
-        return brandService.saveBrand(name, country);
+    public Brand saveBrand(@Argument BrandDTO dto) {
+        return brandService.saveBrand(dto);
     }
 
     @MutationMapping
-    public Brand updateBrand(@Argument int id, @Argument String name, @Argument Country country) {
-        return brandService.updtaBrand(id, name, country);
+    public Brand updateBrand(@Argument int id, BrandDTO dto) {
+        return brandService.updtaBrand(id, dto);
     }
 
     @MutationMapping
@@ -62,8 +64,8 @@ public class BrandController {
     }
 
     @MutationMapping
-    public Model saveModel(@Argument int brandId, @Argument String name) {
-        return modelService.saveModel(brandId, name);
+    public Model saveModel(@Argument ModelDTO dto) {
+        return modelService.saveModel(dto);
     }
 
     @MutationMapping
