@@ -8,7 +8,10 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.util.List;
 
 /**
@@ -56,6 +59,16 @@ public class BrandService {
 
         brandRepository.delete(brand);
         return brand;
+    }
+
+    public Flux<Brand> findAllBrandsFlux(){
+        return Flux.fromStream(findAllBrands().stream())
+                .delayElements(Duration.ofSeconds(1))
+                .take(10);
+    }
+
+    public Mono<Brand> findOneBrandMono(int id){
+        return Mono.justOrEmpty(findOneBrands(id));
     }
 
     @PostConstruct

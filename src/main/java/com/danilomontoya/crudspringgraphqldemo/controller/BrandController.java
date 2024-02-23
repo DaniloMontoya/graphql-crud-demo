@@ -11,7 +11,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.graphql.data.method.annotation.SubscriptionMapping;
 import org.springframework.stereotype.Controller;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -50,6 +53,16 @@ public class BrandController {
     @MutationMapping
     public Brand deleteBrand(@Argument int id) {
         return brandService.deleteBrand(id);
+    }
+
+    @SubscriptionMapping
+    public Flux<Brand> findAllBrandsFlux(){
+        return brandService.findAllBrandsFlux();
+    }
+
+    @SubscriptionMapping
+    public Mono<Brand> findOneBrandMono(@Argument int id){
+        return brandService.findOneBrandMono(id);
     }
 
     //MODEL

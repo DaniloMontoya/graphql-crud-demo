@@ -26,6 +26,6 @@ public class Brand {
     private String name;
     @Enumerated(EnumType.STRING)
     private Country country;
-    @OneToMany(mappedBy = "brand")
+    @OneToMany(mappedBy = "brand", fetch = FetchType.EAGER)
     private List<Model> models;
 }
